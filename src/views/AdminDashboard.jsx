@@ -86,22 +86,6 @@ export default function AdminDashboard() {
       .catch(() => setLoading(false));
   };
 
-  const handleExport = async () => {
-    try {
-      const res = await fetch(`${API_BASE}/admin/export`, { headers: authHeaders() });
-      if (res.status === 401) { sessionStorage.removeItem('admin_token'); window.location.reload(); return; }
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `resultats_upb_${new Date().toISOString().slice(0, 10)}.xlsx`;
-      a.click();
-      window.URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error('Export failed:', err);
-    }
-  };
-
   useEffect(() => { fetchStats(); }, []);
 
   useEffect(() => {
@@ -181,9 +165,6 @@ export default function AdminDashboard() {
           <div className="flex gap-3">
             <button onClick={fetchStats} className="border border-slate-300 hover:bg-slate-50 text-slate-600 px-3 py-2 rounded-lg text-sm flex items-center gap-2 transition-colors">
               <RefreshCw size={14} /> Actualiser
-            </button>
-            <button onClick={handleExport} className="bg-emerald-600 hover:bg-emerald-500 px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-colors text-sm text-white">
-              <FileSpreadsheet size={16} /> Exporter Excel
             </button>
           </div>
         </div>

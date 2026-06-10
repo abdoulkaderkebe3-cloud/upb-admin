@@ -18,7 +18,7 @@ function App() {
 
       {/* Navbar */}
       <nav style={{ background: 'white', borderBottom: '1px solid #e2e8f0', boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}
-        className="w-full px-6 py-2 flex justify-between items-center sticky top-0 z-50">
+        className="w-full px-4 sm:px-6 py-2 flex justify-between items-center sticky top-0 z-50">
         <div className="flex items-center gap-3 no-underline group">
           <div className="bg-white p-1 rounded-xl shadow-sm border border-slate-100 transition-transform group-hover:scale-105">
             <img src="/logo-square.png" alt="Logo UPB" style={{ height: '42px', width: '42px', objectFit: 'contain', borderRadius: '8px' }} />
@@ -31,7 +31,7 @@ function App() {
         <div className="flex items-center gap-3">
           {isAuthenticated && (
             <>
-              <div className="flex items-center gap-2 text-sm text-emerald-700 bg-emerald-50 border border-emerald-200 px-4 py-2 rounded-full">
+              <div className="hidden sm:flex items-center gap-2 text-sm text-emerald-700 bg-emerald-50 border border-emerald-200 px-4 py-2 rounded-full">
                 <ShieldCheck size={14} />
                 <span>Connecté</span>
               </div>
@@ -39,7 +39,7 @@ function App() {
                 onClick={handleLogout}
                 className="flex items-center gap-2 text-slate-500 hover:text-red-600 text-sm transition-colors"
               >
-                <LogOut size={14} /> Déconnexion
+                <LogOut size={14} /> <span className="hidden sm:inline">Déconnexion</span>
               </button>
             </>
           )}
@@ -57,7 +57,7 @@ function App() {
 
       {/* Footer */}
       <footer style={{ borderTop: '1px solid #e2e8f0', background: 'white' }}
-        className="py-4 px-6 flex justify-between items-center">
+        className="py-4 px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-center">
         <div className="flex items-center gap-2">
           <img src="/logo-square.png" alt="UPB" style={{ height: '28px', width: '28px', objectFit: 'contain', borderRadius: '6px' }} />
           <span style={{ fontSize: '12px', color: '#94a3b8' }}>UPB Administration</span>
