@@ -517,9 +517,14 @@ export default function AdminDashboard() {
                     {profDetail.comments.map((c, i) => (
                       <div key={i} className="bg-slate-50 p-4 rounded-xl border-l-4 border-indigo-500">
                         <p className="text-slate-700 italic">"{c.comment}"</p>
-                        <span className="text-xs text-slate-500 mt-2 block">
-                          {new Date(c.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
-                        </span>
+                        <div className="flex flex-wrap items-center gap-2 mt-3">
+                          {c.level && <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">{c.level}</span>}
+                          {c.className && <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-700 border border-indigo-500/20">{c.className}</span>}
+                          {c.course && <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">{c.course}</span>}
+                          <span className="text-xs text-slate-500 ml-auto">
+                            {new Date(c.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                          </span>
+                        </div>
                       </div>
                     ))}
                   </div>
