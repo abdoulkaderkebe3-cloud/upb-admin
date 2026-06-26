@@ -382,10 +382,12 @@ export default function AdminDashboard() {
     const scores = profDetail?.averageScores || {};
     const hasEvals = selectedProf.evaluationsCount > 0;
 
-    const radarData = CRITERIA.filter(c => c.key !== 'q0').map(c => {
-      const avg = c.sub.reduce((sum, qk) => sum + (scores[qk] || 0), 0) / c.sub.length;
-      return { subject: c.label, A: Number(avg.toFixed(2)) };
-    });
+    const radarData = CRITERIA
+      .filter(c => c.key !== 'q0' || scores['q0_global'] != null)
+      .map(c => {
+        const avg = c.sub.reduce((sum, qk) => sum + (scores[qk] || 0), 0) / c.sub.length;
+        return { subject: c.label, A: Number(avg.toFixed(2)) };
+      });
 
     return (
       <div className="w-full flex flex-col gap-6">
