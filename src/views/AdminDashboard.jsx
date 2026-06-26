@@ -453,7 +453,9 @@ export default function AdminDashboard() {
                   {/* Global note first */}
                   {scores['q0_global'] && (
                     <div className="flex items-center gap-3 p-3 bg-amber-50 rounded-xl border border-amber-200">
-                      <span className="text-amber-600 font-bold text-sm flex-1">⭐ Note globale</span>
+                      <span className="text-amber-600 font-bold text-sm flex-1 flex items-center gap-1.5">
+                        <Star size={15} className="fill-amber-400 text-amber-400" strokeWidth={1.5} /> Note globale
+                      </span>
                       <div className="flex items-center gap-2">
                         <div className="w-24 h-2 bg-amber-100 rounded-full">
                           <div className="h-full rounded-full bg-amber-400" style={{ width: `${(scores['q0_global'] / 5) * 100}%` }} />
