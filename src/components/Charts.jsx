@@ -8,11 +8,11 @@ export function RadarAnalytics({ data }) {
     <div className="w-full h-80">
       <ResponsiveContainer width="100%" height="100%">
         <RadarChart cx="50%" cy="50%" outerRadius="70%" data={data}>
-          <PolarGrid stroke="rgba(255,255,255,0.2)" />
-          <PolarAngleAxis dataKey="subject" tick={{ fill: '#94a3b8', fontSize: 12 }} />
-          <PolarRadiusAxis angle={30} domain={[0, 5]} tick={{ fill: '#cbd5e1' }} />
-          <Radar name="Professeur" dataKey="A" stroke="#818cf8" fill="#818cf8" fillOpacity={0.5} />
-          <Tooltip contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '8px', color: '#fff' }} />
+          <PolarGrid stroke="#e2e8f0" />
+          <PolarAngleAxis dataKey="subject" tick={{ fill: '#64748b', fontSize: 12 }} />
+          <PolarRadiusAxis angle={30} domain={[0, 5]} tick={false} />
+          <Radar name="Professeur" dataKey="A" stroke="#6366f1" fill="#818cf8" fillOpacity={0.5} />
+          <Tooltip contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '8px', color: '#1e293b' }} />
         </RadarChart>
       </ResponsiveContainer>
     </div>

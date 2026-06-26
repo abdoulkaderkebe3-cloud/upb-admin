@@ -14,14 +14,15 @@ function authHeaders() {
 }
 
 const CRITERIA = [
-  { key: 'q1', label: 'Maîtrise', sub: ['q1_1', 'q1_2'], color: '#818cf8' },
-  { key: 'q2', label: 'Clarté', sub: ['q2_1', 'q2_2'], color: '#34d399' },
-  { key: 'q3', label: 'Organisation', sub: ['q3_1', 'q3_2'], color: '#f472b6' },
-  { key: 'q4', label: 'Pédagogie', sub: ['q4_1', 'q4_2'], color: '#fb923c' },
-  { key: 'q5', label: 'Disponibilité', sub: ['q5_1', 'q5_2'], color: '#38bdf8' },
-  { key: 'q6', label: 'Évaluation', sub: ['q6_1', 'q6_2'], color: '#a78bfa' },
-  { key: 'q7', label: 'Respect', sub: ['q7_1', 'q7_2'], color: '#fbbf24' },
-  { key: 'q8', label: 'Ponctualité', sub: ['q8_1', 'q8_2'], color: '#f87171' },
+  { key: 'q0', label: 'Note Globale', sub: ['q0_global'], color: '#f59e0b', qs: ['Note globale attribuée par l\'étudiant'] },
+  { key: 'q1', label: 'Maîtrise', sub: ['q1_1', 'q1_2'], color: '#818cf8', qs: ['Connaît-il bien son sujet ?', 'Répond-il correctement aux questions ?'] },
+  { key: 'q2', label: 'Clarté', sub: ['q2_1', 'q2_2'], color: '#34d399', qs: ['Explique-t-il de façon compréhensible ?', 'Utilise-t-il des exemples pertinents ?'] },
+  { key: 'q3', label: 'Organisation', sub: ['q3_1', 'q3_2'], color: '#f472b6', qs: ['Le cours est-il structuré et logique ?', 'Les objectifs du cours sont-ils clairs ?'] },
+  { key: 'q4', label: 'Pédagogie', sub: ['q4_1', 'q4_2'], color: '#fb923c', qs: ['Adapte-t-il ses méthodes aux étudiants ?', 'Encourage-t-il la participation ?'] },
+  { key: 'q5', label: 'Disponibilité', sub: ['q5_1', 'q5_2'], color: '#38bdf8', qs: ['Est-il accessible pour répondre ?', 'Prend-il en compte les difficultés ?'] },
+  { key: 'q6', label: 'Évaluation', sub: ['q6_1', 'q6_2'], color: '#a78bfa', qs: ['Contrôles cohérents avec le cours ?', 'Correction juste et transparente ?'] },
+  { key: 'q7', label: 'Respect', sub: ['q7_1', 'q7_2'], color: '#fbbf24', qs: ['Traite-t-il les étudiants avec respect ?', "Crée-t-il un bon environnement ?"] },
+  { key: 'q8', label: 'Engagement', sub: ['q8_1', 'q8_2'], color: '#f87171', qs: ['Assidu et respectueux des horaires ?', 'Engagement exemplaire dans ses cours ?'] },
 ];
 
 const LEVEL_COLORS = {
@@ -381,8 +382,8 @@ export default function AdminDashboard() {
     const scores = profDetail?.averageScores || {};
     const hasEvals = selectedProf.evaluationsCount > 0;
 
-    const radarData = CRITERIA.map(c => {
-      const avg = ((scores[c.sub[0]] || 0) + (scores[c.sub[1]] || 0)) / 2;
+    const radarData = CRITERIA.filter(c => c.key !== 'q0').map(c => {
+      const avg = c.sub.reduce((sum, qk) => sum + (scores[qk] || 0), 0) / c.sub.length;
       return { subject: c.label, A: Number(avg.toFixed(2)) };
     });
 
@@ -449,35 +450,47 @@ export default function AdminDashboard() {
               <div className="glass-panel p-6 rounded-2xl">
                 <h3 className="font-semibold text-slate-800 mb-6 flex items-center gap-2"><BarChart2 size={18} className="text-slate-400" /> Scores par critère</h3>
                 <div className="flex flex-col gap-4">
-                  {CRITERIA.map(c => {
-                    const avg = ((scores[c.sub[0]] || 0) + (scores[c.sub[1]] || 0)) / 2;
+                  {/* Global note first */}
+                  {scores['q0_global'] && (
+                    <div className="flex items-center gap-3 p-3 bg-amber-50 rounded-xl border border-amber-200">
+                      <span className="text-amber-600 font-bold text-sm flex-1">⭐ Note globale</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-24 h-2 bg-amber-100 rounded-full">
+                          <div className="h-full rounded-full bg-amber-400" style={{ width: `${(scores['q0_global'] / 5) * 100}%` }} />
+                        </div>
+                        <span className="text-amber-700 font-bold w-8 text-right">{Number(scores['q0_global']).toFixed(1)}</span>
+                      </div>
+                    </div>
+                  )}
+                  {CRITERIA.filter(c => c.key !== 'q0').map(c => {
+                    const avg = c.sub.reduce((sum, qk) => sum + (scores[qk] || 0), 0) / c.sub.length;
                     return <CriteriaScoreBar key={c.key} label={c.label} score={avg} color={c.color} />;
                   })}
                 </div>
               </div>
 
               <div className="glass-panel p-6 rounded-2xl flex flex-col">
-                <h3 className="font-semibold text-white mb-4 flex items-center gap-2"><TrendingUp size={18} className="text-indigo-400" /> Profil de performance</h3>
+                <h3 className="font-semibold text-slate-800 mb-4 flex items-center gap-2"><TrendingUp size={18} className="text-indigo-400" /> Profil de performance</h3>
                 <RadarAnalytics data={radarData} />
               </div>
             </div>
 
             {/* Sub-question detail */}
             <div className="glass-panel p-6 rounded-2xl">
-              <h3 className="font-semibold text-white mb-5">Détail par question</h3>
+              <h3 className="font-semibold text-slate-800 mb-5">Détail par question</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {CRITERIA.map(c => (
-                  <div key={c.key} className="bg-slate-800/40 rounded-xl p-4 border border-slate-700/50">
+                  <div key={c.key} className="bg-white rounded-xl p-4 border border-slate-200 shadow-sm">
                     <p className="font-medium mb-3" style={{ color: c.color }}>{c.label}</p>
                     <div className="flex flex-col gap-3">
                       {c.sub.map((qk, i) => (
-                        <div key={qk} className="flex justify-between items-center text-sm">
-                          <span className="text-slate-400">Question {i + 1}</span>
-                          <div className="flex items-center gap-2">
-                            <div className="w-24 h-1.5 bg-slate-700 rounded-full">
+                        <div key={qk} className="flex justify-between items-start text-sm gap-3">
+                          <span className="text-slate-600 text-xs leading-tight flex-1">{c.qs[i]}</span>
+                          <div className="flex items-center gap-2 shrink-0 pt-0.5">
+                            <div className="w-20 h-1.5 bg-slate-100 rounded-full">
                               <div className="h-full rounded-full" style={{ width: `${((scores[qk] || 0) / 5) * 100}%`, backgroundColor: c.color }} />
                             </div>
-                            <span className="text-white font-bold w-8 text-right">{scores[qk] ? scores[qk].toFixed(1) : '—'}</span>
+                            <span className="text-slate-700 font-bold w-6 text-right">{scores[qk] ? scores[qk].toFixed(1) : '—'}</span>
                           </div>
                         </div>
                       ))}

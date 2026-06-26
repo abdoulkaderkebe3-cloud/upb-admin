@@ -20,8 +20,8 @@ function App() {
       <nav style={{ background: 'white', borderBottom: '1px solid #e2e8f0', boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}
         className="w-full px-4 sm:px-6 py-2 flex justify-between items-center sticky top-0 z-50">
         <div className="flex items-center gap-3 no-underline group">
-          <div className="bg-white p-1 rounded-xl shadow-sm border border-slate-100 transition-transform group-hover:scale-105">
-            <img src="/logo-square.png" alt="Logo UPB" style={{ height: '42px', width: '42px', objectFit: 'contain', borderRadius: '8px' }} />
+          <div className="transition-transform group-hover:scale-105">
+            <img src="/logo-clean.png" alt="Logo UPB" style={{ height: '42px', width: '42px', objectFit: 'contain' }} />
           </div>
           <div style={{ lineHeight: 1.25 }}>
             <div style={{ fontWeight: 600, color: '#111827', fontSize: '15px' }}>UPB Admin</div>
@@ -58,9 +58,9 @@ function App() {
       {/* Footer */}
       <footer style={{ borderTop: '1px solid #e2e8f0', background: 'white' }}
         className="py-4 px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-center">
-        <div className="flex items-center gap-2">
-          <img src="/logo-square.png" alt="UPB" style={{ height: '28px', width: '28px', objectFit: 'contain', borderRadius: '6px' }} />
-          <span style={{ fontSize: '12px', color: '#94a3b8' }}>UPB Administration</span>
+        <div className="flex items-center gap-2 grayscale opacity-60">
+          <img src="/logo-clean.png" alt="UPB" style={{ height: '28px', width: '28px', objectFit: 'contain' }} />
+          <span style={{ fontSize: '13px', fontWeight: 600 }}>UPB Admin</span>
         </div>
         <span style={{ fontSize: '12px', color: '#cbd5e1' }}>
           © {new Date().getFullYear()} — Panneau sécurisé

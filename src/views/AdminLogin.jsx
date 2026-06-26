@@ -43,8 +43,8 @@ export default function AdminLogin({ onLogin }) {
       >
         {/* Logo + Title */}
         <div className="text-center mb-8">
-          <div className="bg-white p-2 rounded-2xl shadow-sm border border-slate-100 mb-4 inline-block mx-auto">
-            <img src="/logo-square.png" alt="Logo UPB" style={{ height: '64px', objectFit: 'contain', borderRadius: '12px', display: 'block' }} />
+          <div className="mb-4 inline-block mx-auto">
+            <img src="/logo-clean.png" alt="Logo UPB" style={{ height: '64px', objectFit: 'contain', display: 'block' }} />
           </div>
           <h1 style={{ fontSize: '22px', fontWeight: 700, color: '#111827' }}>Accès Administrateur</h1>
           <p style={{ color: '#6b7280', fontSize: '14px', marginTop: '6px' }}>
